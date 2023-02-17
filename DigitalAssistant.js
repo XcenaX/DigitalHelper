@@ -50,3 +50,15 @@ export default class DigitalAssistant {
         window.speechSynthesis.speak(msg);
     }
 }
+
+document.addEventListener('DOMContentLoaded', function(){
+    const assistant = new DigitalAssistant({
+        name: "Oleg",
+        skills: [
+            require("./skills/hi.js"),
+            require("./skills/navigate_step1.js"),
+        ],        
+    })
+
+    assistant.process("Привет")
+});
