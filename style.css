@@ -1,0 +1,17 @@
+.wrapper{
+    width: 250px;
+    display: flex;
+    background-color: #8C64D8;
+    border-radius: 0.55rem;
+    justify-content: center;
+    align-items: center;
+}
+.title_robot{
+    background-color: #8C64D8;
+    color: #fff;
+    text-align: center;
+} 
+.chat{
+    min-height: 100px;
+    background-color: aliceblue;
+}
