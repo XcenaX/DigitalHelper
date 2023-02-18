@@ -63,22 +63,42 @@ body {
     align-items: center;
     justify-content: center;
 } 
+
 .message{
-  display: block;
-  text-align: center;
-  background-color: #daef14;
-  color: #000;
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  color: black;
   border-radius: 0.55rem;
-  height: 5%;
-  margin: 10px auto;
+  height: fit-content;
+  margin: 0;
+  margin-top: 10px;
+  font-weight: 500;
+  margin-bottom: 10px;
   padding: 10px 10px;
+  margin-left: auto;
 }
+
+.message.bot{        
+    background-color: #daef14;    
+    margin-left: 5%;    
+}
+
+.message.me{
+  background-color: #1447ef;
+  justify-content: end;
+  margin-right: 5%;
+  margin-left: auto;
+}
+
 .chat{
     min-height: 100px;
     height: 89%;
     width: 100%;
     max-width: 100%;
     background-color: #fff;
+    overflow-y: auto;
+    max-height: 89%;
 }
 .windows_chat{
     display: flex;
@@ -88,14 +108,22 @@ body {
     border-radius: 0.55rem;
 }
 .input_chat{
-    width: 70%;    
-    outline: none;    
+    width: 70%;
+    outline: none;
     height: 80%;
     margin: auto;
-    font-size: 24px;
+    font-size: 19px;
+    border-radius: 0.6rem;
     padding-left: 15px;
+    border: none;
 }
-.robot_chat__close{
-  text-align: end;
-  padding-right: 5px;
+.robot_chat__close{    
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+    background-image: url(./images/cancel.png);
+    background-size: contain;
+    background-repeat: no-repeat;
 }

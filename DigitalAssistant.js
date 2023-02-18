@@ -1,4 +1,9 @@
-import readTextFile from "./functions.js"
+// Нужно вынести в отдельный файл
+//import { PUBLIC_KEY, PRIVATE } from "./env.js";
+const PUBLIC_KEY = "BJa3I1_xBoM-ClXcJovm2Xyeo3EvdCP61ANrvXE0_Beey4yFllJ4VZ1eopBHL0DbwMWDNGg5XWAyY4BFTlpTDD4"
+const PRIVATE_KEY = "GN1_gOI8PrZtx3hr4P_fCTSNywBlvabSdzCCoLWrM_E"
+
+console.log("PUBLIC_KEY:", PUBLIC_KEY);
 
 const defaults = {
     skills: [],
@@ -6,8 +11,35 @@ const defaults = {
     language: 'ru',
     reply: "Извини, не понимаю тебя",
 };
+
+const skills = [
+    {
+        "Hi": {
+            resolve: () => new Promise((resolve) => {
+                resolve("Привет, я цифровой помощник!");
+            }),
+            trigger: function(){
+                return sen.toLowerCase().includes("привет");
+            }
+        }
+    },
+    {
+        "NavigateStep1": {
+            resolve: () => new Promise((resolve) => {
+                resolve("Для начала тебе нужно создать проект. Для этого для начала нажми на кнопку 'Мои Проекты'");
+            }),
+            trigger: function(){
+                var pageTitle = document.getElementsByTagName("title")[0].textContent;
+                if(pageTitle.toLocaleLowerCase().includes("главная")) return true;
+                return false;
+            }
+        }
+    }
+]
+
+const chatComponentId = "chat";
   
-export default class DigitalAssistant {
+class DigitalAssistant {
     constructor(config = {}) {
         // путь к html файлу помощника (заменить на нужный)
         this.assistantFile = "file:///C:/Users/vlad-/OneDrive/Рабочий стол/Projects/Hackaton2023/DigitalHelper/index.html";
@@ -21,7 +53,7 @@ export default class DigitalAssistant {
         this.config = { ...defaults, ...config };
         
         // распознавание голоса
-        this.recognizer = new webkitSpeechRecognition();
+        this.recognizer = new SpeechRecognition();
         this.recognizer.lang = this.config.language;
         this.recognizer.addEventListener('end', () => {
         this.recognizer.start();
@@ -40,6 +72,10 @@ export default class DigitalAssistant {
     start() {
         this.recognizer.start();
         
+        if ('PushManager' in window) { 
+            Notification.requestPermission();
+        }
+        
         // добавление html помощника на страницу
         var html = readTextFile(this.assistantFile); 
         var div = document.createElement('div');
@@ -52,9 +88,21 @@ export default class DigitalAssistant {
             return skill.resolve(sentence).then(s => this.say(s));
         return this.say(this.config.reply);
     }
+
+    addMessageToChat(message){
+        var chatElement = document.getElementById(chatComponentId);   
+        messageElement = document.createElement("div");
+        messageElement.innerHTML = ```
+        html сообщения
+        
+        ```
+        chatElement.appendChild(messageElement);
+    }
+
     say(sentence) {
         const filtered = sentence.replace(/[&\/\\#,+()$~%.'"*?<>{}]/g, '');
         const msg = new SpeechSynthesisUtterance(filtered);
+        addMessageToChat(msg);
         window.speechSynthesis.speak(msg);
     }
 
@@ -72,11 +120,9 @@ export default class DigitalAssistant {
 document.addEventListener('DOMContentLoaded', function(){
     const assistant = new DigitalAssistant({
         name: "Oleg",
-        skills: [
-            require("./skills/hi.js"),
-            require("./skills/navigate_step1.js"),
-        ],        
+        skills: skills,        
     })
 
-    assistant.process("Привет")
+    assistant.start();
+    assistant.process("Привет");
 });
