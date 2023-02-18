@@ -84,6 +84,8 @@ body {
     display: flex;
     justify-content: space-between;  
     height: 6%;
+    background-color: #8C64D8;
+    border-radius: 0.55rem;
 }
 .input_chat{
     width: 70%;    
