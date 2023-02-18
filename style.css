@@ -77,6 +77,7 @@ body {
   margin-bottom: 10px;
   padding: 10px 10px;
   margin-left: auto;
+  max-width: 75%;
 }
 
 .message.bot{        
@@ -118,11 +119,12 @@ body {
     border: none;
 }
 .robot_chat__close{    
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     position: absolute;
     right: 10px;
-    top: 5px;
+    top: 10px;
+    cursor: pointer;
     background-image: url(./images/cancel.png);
     background-size: contain;
     background-repeat: no-repeat;
