@@ -63,6 +63,16 @@ body {
     align-items: center;
     justify-content: center;
 } 
+.message{
+  display: block;
+  text-align: center;
+  background-color: #daef14;
+  color: #000;
+  border-radius: 0.55rem;
+  height: 5%;
+  margin: 10px auto;
+  padding: 10px 10px;
+}
 .chat{
     min-height: 100px;
     height: 89%;
