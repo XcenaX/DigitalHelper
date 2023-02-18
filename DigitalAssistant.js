@@ -11,8 +11,16 @@ export default class DigitalAssistant {
     constructor(config = {}) {
         // путь к html файлу помощника (заменить на нужный)
         this.assistantFile = "file:///C:/Users/vlad-/OneDrive/Рабочий стол/Projects/Hackaton2023/DigitalHelper/index.html";
+        
+        // id елементов подсказок для каждой страницы
+        this.guideBlocks = {
+            "mainPage": ["mainPageGuideBlock1", "mainPageGuideBlock2", "mainPageGuideBlock3", "mainPageGuideBlock4", "mainPageGuideBlock5", "mainPageGuideBlock6"],
+            "projectsPage": ["projectsPageGuideBlock1"],            
+        }
+
         this.config = { ...defaults, ...config };
         
+        // распознавание голоса
         this.recognizer = new webkitSpeechRecognition();
         this.recognizer.lang = this.config.language;
         this.recognizer.addEventListener('end', () => {
@@ -48,6 +56,16 @@ export default class DigitalAssistant {
         const filtered = sentence.replace(/[&\/\\#,+()$~%.'"*?<>{}]/g, '');
         const msg = new SpeechSynthesisUtterance(filtered);
         window.speechSynthesis.speak(msg);
+    }
+
+    // для каждой страницы будет свой набор подсказок
+    startGuide(page){
+        if(this.guideBlocks[page] == undefined){
+            return
+        }
+        for(var i = 0; i < this.guideBlocks[page].length; i++){
+            
+        }        
     }
 }
 
